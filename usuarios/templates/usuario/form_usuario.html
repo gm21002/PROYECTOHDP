@@ -1,0 +1,93 @@
+<!-- Exportamos Plantilla Base -->
+{% extends 'base.html' %}
+
+{% block title %}Registrar Usuario{% endblock %}
+<!-- Iniciamos Bloque de Codigo -->
+{%block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h1 class="text-center text-uppercase">
+      Datos del Usuarios
+      <a
+        style="color: #260b70; float: right; padding: 0px 10px 0px 0px"
+        href="{% url 'listar_encuestas' %}">
+        <i class="bi bi-view-list"></i>
+      </a>
+      <a
+        style="color: #260b70; float: left; padding: 0px 10px 0px 0px"
+        href="{% url 'inicio' %}">
+        <span><i class="bi bi-arrow-left-circle"></i></span>
+      </a>
+      <hr />
+    </h1>
+  </div>
+</div>
+
+<!-- Creamos formulario para insercion de Usuarios en la BD-->
+<div class="row justify-content-md-center">
+  <form
+    name="form_usuario"
+    method="POST"
+    action="{% url 'registrar_usuario' %}"
+    class="row justify-content-md-center g-3"
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-md-5">
+      <label for="nombre_usuario" class="form-label">
+        Nombre del Usuario
+      </label>
+      <input type="text" name="nombre_usuario" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="apellido_usuario" class="form-label">
+        Apellido del Usuario
+      </label>
+      <input
+        type="text"
+        name="apellido_usuario"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="email_usuario" class="form-label">
+        Email del Usuario
+      </label>
+      <input type="text" name="email_usuario" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="password_usuario" class="form-label">
+        Contraseña del Usuario
+      </label>
+      <input type="text" name="password_usuario" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="edad_usuario" class="form-label">
+        Edad
+      </label>
+      <input type="number" name="edad_usuario" class="form-control" required />
+    </div>    
+  
+    <div class="col-md-5">
+      <label for="telefono_usuario" class="form-label">
+        Telefono
+      </label>
+      <input
+        type="number"
+        name="telefono_usuario"
+        class="form-control"
+        required />
+    </div>
+
+    <div class="col-md-5"></div>
+
+    <!-- Boton para ingresar campos en la BD -->
+    <div class="d-grid gap-2 col-8 mx-auto mt-5">
+      <button class="btn btn-primary" type="submit">
+        Registrar Usuario
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

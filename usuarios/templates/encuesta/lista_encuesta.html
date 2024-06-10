@@ -1,0 +1,154 @@
+<!-- Importamos Plantilla Basae-->
+{% extends 'base.html' %}
+
+{% block title %}Registrar Encuesta{% endblock %}
+
+<!-- Iniciamos Codigo -->
+{%block content %} {% load static %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h2 class="text-center text-uppercase">
+      <a
+        style="color: #260b70; float: left; padding: 0px 10px 0px 0px"
+        href="{% url 'inicio' %}">
+        <span><i class="bi bi-arrow-left-circle"></i></span>
+      </a>
+      Lista de Encuestas
+      <a
+        style="color: #260b70; float: right; padding: 0px 10px 0px 0px"
+        href="{% url 'agregar_encuesta' %}"
+        title="Descargar Data de Encuesta">
+        <i class="bi bi-plus"></i>
+      </a>
+      <hr />
+    </h2>
+  </div>
+</div>
+
+{% if encuestas %}
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Salario Estimado</th>
+        <th>¿Esta usted a favor del aumento en el salario minimo?</th>
+        <th>¿Sabe de cuanto fue el ultimo aumento de salario minimo?</th>
+        <th>Porcentaje de aumento en el salario minimo</th>
+        <th>Razones del aumento</th>
+        <th>¿Actualmente es competitivo en comparacion a otros paises de centro america?</th>
+        <th>Ventajas de un aumento en el salario minimo</th>
+        <th>Desventajas de un aumento en el salario minimo</th>        
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for encuesta in encuestas %}
+      <tr id="encuesta_{{ encuesta.id }}">
+        <td>{{ encuesta.salest_encuesta }}</td>
+        <td>{{ encuesta.favor_encuesta }}</td>
+        <td>{{ encuesta.poraum_encuesta }}</td>
+        <td>{{ encuesta.ultaum_encuesta }}</td>
+        <td>{{ encuesta.razon_encuesta }}</td>
+        <td>{{ encuesta.comact_encuesta }}</td>
+        <td>{{ encuesta.ventajas_encuesta }}</td>
+        <td>{{ encuesta.desventajas_encuesta }}</td>
+
+        <td>
+          <span style="display: flex; justify-content: space-between">
+            <a
+              class="btn btn-info info_especial"
+              href="{% url 'detalles_encuesta' encuesta.id %}"
+              title="Ver Detalles del Encuesta">
+              <i class="bi bi-person-bounding-box"></i>
+            </a>
+            <a
+              class="btn btn-success success_especial"
+              title="Editar datos de Encuesta"
+              href="{% url 'view_form_update_encuesta' encuesta.id %}">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+
+            {% csrf_token %}
+            <button
+              class="btn btn-warning warning_especial"
+              title="Eliminar Encuesta"
+              onclick="borrarEncuesta('{{ encuesta.id }}')">
+              <i class="bi bi-trash"></i>
+            </button>
+          </span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-center">No hay Encuestas registrados 😭.</p>
+{% endif %} {% endblock %}
+
+<!-- Metodo para borrar Encuesta -->
+{% block customJS %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  async function borrarEncuesta(idEncuesta) {
+    var confirmation = confirm(
+      "¿Estas seguro que deseas eliminar la Encuesta?"
+    );
+
+    if (confirmation) {
+      try {
+        let li = document.querySelector("#encuesta_" + idEncuesta);
+
+        let csrfToken = "{{ csrf_token|escapejs }}";
+
+        // Realiza la solicitud POST utilizando Axios
+        const response = await axios({
+          method: "post",
+          url: "/eliminar-encuesta/",
+          data: { idEncuesta },
+          headers: {
+            "X-CSRFToken": csrfToken,
+          },
+        });
+
+        console.log(response.data);
+        console.log(response.data.resultado);
+        if (response.data.resultado == 1) {
+          alerta("La encuesta fue eliminado correctamente 😏", 1);
+          li.remove();
+        } else {
+          console.log("Error al intentar borrar la encuesta");
+        }
+      } catch (error) {
+        console.error("Error al realizar la solicitud:", error);
+      }
+    }
+  }
+
+  function alerta(msj, tipo_msj) {
+    const divExistente = document.querySelector(".alert");
+    if (divExistente) {
+      divExistente.remove();
+    }    
+    const divRespuesta = document.createElement("div");
+    divRespuesta.classList.add("col-md-11");
+
+    divRespuesta.innerHTML = `
+      <div class="alert ${
+        tipo_msj == 1 ? "alert-success" : "alert-danger"
+      }  alert-dismissible text-center" role="alert">
+        ${msj}
+      </div>
+  `;
+
+    setTimeout(function () {
+      divRespuesta.innerHTML = "";
+    }, 8000);
+
+    const container = document.querySelector(".row");
+    container.insertAdjacentElement("beforeend", divRespuesta);
+  }
+</script>
+
+{% endblock %}

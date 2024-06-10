@@ -1,0 +1,53 @@
+<!--Importamos la Base de HTML-->
+{% extends '../base.html' %}
+
+{% block title %}Detalles del Usuario{% endblock %}
+
+{% load static %}
+
+<!--Iniciamos codigo de Bloque-->
+{% block content %}
+
+<div class="row justify-content-md-center">
+  <a
+    title="volver"
+    style="float: left; font-size: 25px" style="color: #260b70";
+    href="{% url 'listar_encuestas' %}">
+    <span><i class="bi bi-arrow-left-circle"></i></span>
+  </a>
+  <div class="col-md-5 mb-2">    
+      <!--Importamos Datos de BD-->
+      <div class="card-body">
+        <p class="card-title">
+          <strong>Salario Estimado:</strong> {{ encuesta.salest_encuesta }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>¿Esta usted a favor del aumento en el salario minimo?: </strong>
+          {{ encuesta.favor_encuesta }}
+        </p>     
+        <p class="card-text buttom mb-3">
+          <strong> Porcentaje de aumento en el salario minimo:</strong> {{ encuesta.poraum_encuesta }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>¿Sabe de cuanto fue el ultimo aumento de salario minimo?:</strong> {{ encuesta.ultaum_encuesta }} 
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Razones del aumento:</strong> {{ encuesta.razon_encuesta }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>¿Actualmente es competitivo en comparacion a otros paises de centro america?:</strong> {{ encuesta.comact_encuesta }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Ventajas de un aumento en el salario minimo:</strong> {{ encuesta.ventajas_encuesta }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Desventajas de un aumento en el salario minimo:</strong> {{ encuesta.desventajas_encuesta }}
+        </p>
+        <p class="card-text">{{ usuario.created_at|date:"M d, Y" }}</p>
+
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

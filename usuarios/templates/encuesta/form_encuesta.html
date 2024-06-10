@@ -1,0 +1,101 @@
+<!--Importamos Plantilla Base de HTML-->
+{% extends 'base.html' %}
+
+{% block title %}Registrar Encuesta{% endblock %}
+
+<!--Codigo de Bloque-->
+{%block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h1 class="text-center text-uppercase">
+      Datos de Encuesta
+      <a
+        style="color: #260b70; float: right; padding: 0px 10px 0px 0px"
+        href="{% url 'listar_encuestas' %}">
+        <i class="bi bi-view-list"></i>
+      </a>
+      <a
+        style="color: #260b70; float: left; padding: 0px 10px 0px 0px"
+        href="{% url 'inicio' %}">
+        <span><i class="bi bi-arrow-left-circle"></i></span>
+      </a>
+      <hr />
+    </h1>
+  </div>
+</div>
+
+<!--Insercion de Datos en la BD-->
+<div class="row justify-content-md-center">
+  <form
+    name="form_encuesta"
+    method="POST"
+    action="{% url 'agregar_encuesta' %}"
+    class="row justify-content-md-center g-3"
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-md-5">
+      <label for="salest_encuesta" class="form-label">
+        Salario Estimado
+      </label>
+      <input type="number" name="salest_encuesta" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="favor_encuesta" class="form-label">
+        ¿Esta usted a favor del aumento en el salario minimo?
+      </label>
+      <input
+        type="text"
+        name="favor_encuesta"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="poraum_encuesta" class="form-label">
+        Porcentaje de aumento en el salario minimo 
+      </label>
+      <input type="text" name="poraum_encuesta" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="ultaum_encuesta" class="form-label">
+        ¿Sabe de cuanto fue el ultimo aumento de salario minimo?
+      </label>
+      <input type="text" name="ultaum_encuesta" class="form-control" required />
+    </div>    
+    <div class="col-md-5">
+      <label for="razon_encuesta" class="form-label">
+        Razones del aumento
+      </label>
+      <input type="text" name="razon_encuesta" class="form-control" required />
+    </div>    
+    <div class="col-md-5">
+      <label for="comact_encuesta" class="form-label">
+        ¿Actualmente es competitivo en comparacion a otros paises de centro america?
+      </label>
+      <input type="text" name="comact_encuesta" class="form-control" required />
+    </div>  
+    <div class="col-md-5">
+      <label for="ventajas_encuesta" class="form-label">
+        Ventajas de un aumento en el salario minimo
+      </label>
+      <input type="text" name="ventajas_encuesta" class="form-control" required />
+    </div> 
+    <div class="col-md-5">
+      <label for="desventajas_encuesta" class="form-label">
+        Desventajas de un aumento en el salario minimo
+      </label>
+      <input type="text" name="desventajas_encuesta" class="form-control" required />
+    </div> 
+
+    <div class="col-md-5"></div>
+
+    <!-- Boton con ql que se realiza la accion de Views agregar_encuesta -->
+    <div class="d-grid gap-2 col-8 mx-auto mt-5">
+      <button class="btn btn-primary" type="submit">
+        Registrar Encuesta
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

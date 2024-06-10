@@ -1,0 +1,105 @@
+<!-- Importamos Plantilla Base-->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Datos del Usuario{% endblock %}
+
+{%block content %}
+{% load static %}
+
+<!-- Iniciamos bloque de codigo Actualizar un Usuario -->
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h1 class="text-center text-uppercase">
+      <a style="float: left" href="{% url 'inicio' %}">
+        <span><i class="bi bi-arrow-left-circle"></i></span>
+      </a>
+      Datos del Usuario
+      <hr />
+    </h1>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <form
+    name="form_usuario"
+    method="POST"
+    action="{% url 'actualizar_usuario' usuario.id %}"
+    class="row justify-content-md-center g-3"
+    enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <div class="col-md-5">
+      <label for="nombre_usuario" class="form-label">
+        Nombre del Usuario
+      </label>
+      <input
+        type="text"
+        name="nombre_usuario"
+        value="{{ usuario.nombre_usuario}}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="apellido_usuario" class="form-label">
+        Apellido del Usuario
+      </label>
+      <input
+        type="text"
+        name="apellido_usuario"
+        value="{{ usuario.apellido_usuario}}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="email_usuario" class="form-label">
+        Email del Empleado
+      </label>
+      <input
+        type="text"
+        name="email_usuario"
+        value="{{ usuario.email_usuario }}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="password_usuario class="form-label">
+        Contraseña del Usuario
+      </label>
+      <input
+        type="text"
+        name="password_usuario"
+        value="{{ usuario.password_usuario }}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="edad_usuario" class="form-label"> Edad del Usuario </label>
+      <select name="edad_usuario" class="form-select" required>
+            {% for edad, edad_text in opciones_edad %}
+                <option value="{{ edad }}" {% if usuario.edad_usuario == edad %}selected{% endif %}>
+                    {{ edad_text }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-5">
+      <label for="telefono_usuario" class="form-label">
+        Telefono del Usuario
+      </label>
+      <input
+        type="text"
+        name="telefono_usuario"
+        value="{{ usuario.telefono_usuario }}"
+        class="form-control"
+        required />
+    </div>    
+<!-- Boton para Hacer permanentos las actulizaciones-->
+    <div class="d-grid gap-2 col-8 mx-auto mt-5">
+      <button class="btn btn-primary" type="submit">
+        Actualizar Datos del Usuario
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

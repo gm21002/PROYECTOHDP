@@ -1,0 +1,376 @@
+<!-- Importamos plantilla Base3-->
+{% extends 'base3.html' %}
+
+{% block content %}
+
+<!-- Paguina Principal -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efectos del Salario Mínimo en El Salvador (2019-2023)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Definimos estilos -->
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #66BB6A;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .hero {
+            background-image: url("https://images.unsplash.com/photo-1573497491208-6b1acb260507");
+            color: rgb(16, 16, 16);
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        h2 {
+            color: #388E3C;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .chart-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<div class="right_col" role="main">
+<body>
+    <header>
+        <h1>Efectos del Salario Mínimo en El Salvador (2019-2023)</h1>
+    </header>
+    <!-- Links de Navegacion-->
+    <nav>
+        <a href="registrar-nuevo-usuario/">Registrar Usuario</a>
+        <a href="lista-de-usuarios/">Lista de Usuarios</a>
+        <a href="agregar-nuevo-encuesta/">Registrar Encuesta</a>        
+        <a href="lista-de-encuestas/">Lista de Encuesta</a>
+    </nav>
+
+    <!-- Apartados de Texto y Graficos Dinamicos -->
+    <div class="hero">
+        <h1>Impacto del Salario Mínimo</h1>
+        <p>Analizando los efectos del incremento del salario mínimo en los últimos 5 años.</p>
+    </div>
+    <div class="container">
+        <section id="positivos">
+            <h2>Efectos Positivos</h2>
+            <ul>
+                <li><strong>Mejora de calidad de vida:</strong> Las familias con dos salarios mínimos han mejorado significativamente su calidad de vida.</li>
+                <li><strong>Reducción de pobreza extrema:</strong> La pobreza extrema se redujo del 10.7% en 2019 al 7.92% en 2023.</li>
+                <li><strong>Aumento de consumo:</strong> El mayor poder adquisitivo ha incrementado el consumo y beneficiado la economía local.</li>
+            </ul>
+        </section>
+        <section id="negativos">
+            <h2>Efectos Negativos</h2>
+            <ul>
+                <li><strong>Inflación:</strong> El índice de inflación aumentó debido al ajuste de precios por parte de las empresas.</li>
+                <li><strong>Despidos masivos:</strong> Muchas empresas redujeron personal para poder pagar el nuevo salario mínimo.</li>
+                <li><strong>Incremento del trabajo informal:</strong> Muchos trabajadores se trasladaron al sector informal, afectando la recaudación fiscal y las prestaciones.</li>
+            </ul>
+        </section>
+        <section id="resumen">
+            <h2>Resumen</h2>
+            <p>El aumento del salario mínimo en 2021 tuvo efectos mixtos en la economía de El Salvador. Aunque mejoró la calidad de vida para algunos y redujo la pobreza extrema, también contribuyó a la inflación y aumentó el trabajo informal. A futuro, es crucial adoptar un enfoque equilibrado en las políticas salariales y económicas para maximizar los beneficios y minimizar los efectos negativos.</p>
+        </section>
+        <section id="grafico" style="text-align: center;">
+          <h2>Graficos</h2>
+          <p>Estos gráficos muestran las opiniones de las personas recopiladas a través de encuestas. Analizan diferentes aspectos relacionados con el incremento del salario mínimo en El Salvador entre 2019 y 2023. Desde la favorabilidad hacia el aumento salarial hasta las razones detrás de estas opiniones, estos gráficos ofrecen una mirada detallada sobre cómo perciben los ciudadanos este importante cambio económico. Explora los datos y descubre las tendencias y patrones en las opiniones de la población</p>
+      </section>
+      
+        
+      <section>
+        <h2>Gráfico 1</h2>
+        <p>Este gráfico muestra las razones detrás de la opinión de las personas sobre el incremento del salario mínimo en El Salvador.</p>
+        <div class="chart-container">
+            <canvas id="razonChart"></canvas>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Gráfico 2</h2>
+        <p>Este gráfico representa la favorabilidad de las personas hacia el aumento del salario mínimo en El Salvador.</p>
+        <div class="chart-container">
+            <canvas id="favorChart"></canvas>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Gráfico 3</h2>
+        <p>Este gráfico muestra las ventajas percibidas por las personas debido al incremento del salario mínimo.</p>
+        <div class="chart-container">
+            <canvas id="ventajasChart"></canvas>
+        </div>
+    </section>
+    
+    <section id="desventajas">
+        <h2>Grafico 4</h2>
+        <p>Este gráfico ilustra las desventajas señaladas por las personas como resultado del aumento del salario mínimo en El Salvador.</p>
+        <div class="chart-container">
+            <canvas id="desventajasChart"></canvas>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Gráfico 5</h2>
+        <p>Muestra el Porcentaje de Aumento en el Salario Minimo en la Ultima Reforma</p>
+        <div class="chart-container">
+            <canvas id="poraumChart"></canvas>
+        </div>
+    </section>
+    
+
+    
+    </div>
+    <footer>
+        <p>&copy; 2024 Todos los derechos reservados.</p>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Obtener datos de favor_encuesta
+          fetch('/data/')
+              .then(response => response.json())
+              .then(data => {
+                  const favorLabels = data.map(encuesta => encuesta.favor_encuesta);
+                  const favorCounts = data.map(encuesta => encuesta.count);
+  
+                  const favorCtx = document.getElementById('favorChart').getContext('2d');
+                  new Chart(favorCtx, {
+                      type: 'bar',
+                      data: {
+                          labels: favorLabels,
+                          datasets: [{
+                              label: 'Cantidad',
+                              data: favorCounts,
+                              borderColor: 'rgba(75, 192, 192, 1)',
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          plugins: {
+                              title: {
+                                  display: true,
+                                  text: '¿Está usted a favor del incremento del salario mínimo?'
+                              }
+                          },
+                          scales: {
+                              y: {
+                                  beginAtZero: true
+                              }
+                          }
+                      }
+                  });
+              });
+  
+          // Obtener datos de razon_encuesta
+          fetch('/data/razon_encuesta/') // Modificación de la URL para obtener los datos de razon_encuesta
+              .then(response => response.json())
+              .then(data => {
+                  const razonLabels = data.map(encuesta => encuesta.razon_encuesta);
+                  const razonCounts = data.map(encuesta => encuesta.count);
+  
+                  const razonCtx = document.getElementById('razonChart').getContext('2d');
+                  new Chart(razonCtx, {
+                      type: 'bar',
+                      data: {
+                          labels: razonLabels,
+                          datasets: [{
+                              label: 'Cantidad',
+                              data: razonCounts,
+                              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                              borderColor: 'rgba(255, 99, 132, 1)',
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          plugins: {
+                              title: {
+                                  display: true,
+                                  text: '¿Razónes del aumento?'
+                              }
+                          },
+                          scales: {
+                              y: {
+                                  beginAtZero: true
+                              }
+                          }
+                      }
+                  });
+              });
+
+
+              fetch('/data/ventajas_encuesta/')
+            .then(response => response.json())
+            .then(data => {
+                const ventajasLabels = data.map(encuesta => encuesta.ventajas_encuesta);
+                const ventajasCounts = data.map(encuesta => encuesta.count);
+
+                const ventajasCtx = document.getElementById('ventajasChart').getContext('2d');
+                new Chart(ventajasCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ventajasLabels,
+                        datasets: [{
+                            label: 'Cantidad',
+                            data: ventajasCounts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Ventajas de un aumento al salario minimo'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+            fetch('/data/desventajas_encuesta/')
+            .then(response => response.json())
+            .then(data => {
+                const desventajasLabels = data.map(encuesta => encuesta.desventajas_encuesta);
+                const desventajasCounts = data.map(encuesta => encuesta.count);
+
+                const desventajasCtx = document.getElementById('desventajasChart').getContext('2d');
+                new Chart(desventajasCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: desventajasLabels,
+                        datasets: [{
+                            label: 'Cantidad',
+                            data: desventajasCounts,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Desventajas de un aumento al salario minimo'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Obtener datos de poraum_encuesta
+        fetch('/data/poraum_encuesta/') // Nueva URL para obtener los datos de poraum_encuesta
+            .then(response => response.json())
+            .then(data => {
+                const poraumLabels = data.map(encuesta => encuesta.poraum_encuesta);
+                const poraumCounts = data.map(encuesta => encuesta.count);
+
+                // Convertir los porcentajes en valores decimales
+                const poraumValues = poraumLabels.map(label => parseFloat(label) / 100);
+
+                const poraumCtx = document.getElementById('poraumChart').getContext('2d');
+                new Chart(poraumCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: poraumValues.map(value => (value * 100).toLocaleString() + '%'), // Formatear las etiquetas del eje y como porcentajes
+                        datasets: [{
+                            label: 'Cantidad',
+                            data: poraumCounts,
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '¿Incrementó su salario después de la última actualización?'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toLocaleString() + '%'; // Formatear los valores del eje y como porcentajes
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+              
+      });
+  </script>
+  
+</div>  
+</body>
+</html>
+ 
+{% endblock %}

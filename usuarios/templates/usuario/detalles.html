@@ -1,0 +1,49 @@
+<!-- Importamos Plantilla Base -->
+{% extends '../base.html' %}
+
+{% block title %}Detalles del Usuario{% endblock %}
+
+{% load static %}
+
+<!-- Inicia Bloque de Codigo-->
+{% block content %}
+
+<!-- Metodo para imprimir los datos del usuario -->
+<div class="row justify-content-md-center">
+  <a
+    title="volver"
+    style="float: left; font-size: 25px"
+    href="{% url 'listar_usuarios' %}">
+    <span><i class="bi bi-arrow-left-circle"></i></span>
+  </a>
+  <div class="col-md-5 mb-2">
+
+      <div class="card-body">
+        <p class="card-title">
+          <strong>Nombre del Usuario:</strong> {{ usuario.nombre_usuario }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Apellido del Usuario: </strong>
+          {{ usuario.apellido_usuario }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Email del Usuario:</strong> {{ usuario.email_usuario }} 
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong> Contraseña del Usuario:</strong> {{ usuario.password_usuario }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Edad del Usuario:</strong> {{ usuario.edad_usuario }} Años
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Telefono del Usuario</strong> {{ usuario.telefono_usuario }}
+        </p>
+        <p class="card-text">{{ usuario.created_at|date:"M d, Y" }}</p>
+
+        <hr />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
